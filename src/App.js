@@ -1,6 +1,8 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 import React from 'react';
 import axios from 'axios';
+import Movie from './Movie';
+import './App.css';
 
 class App extends React.Component{
 
@@ -10,11 +12,17 @@ class App extends React.Component{
   }
 
   getMovies = async () => {
-    const {data} = await axios.get('https://yts.mx/api/v2/list_movies.json');
+    const {
+      data:{
+        data:{
+          movies
+        }
+      }}
+     = await axios.get('https://yts.mx/api/v2/list_movies.json?sort_by=rating');
     // Object.assign(this.state.movies,data.data.movies);
-    this.setState({movies:data.data.movies});
+    this.setState({movies});
     this.setState({isLoading:false});
-    console.log(this.state.movies);  
+    console.log(movies);  
   };
 
   componentDidMount(){
@@ -42,13 +50,22 @@ class App extends React.Component{
         <br/>
         
         {movies.map(movie => {
-          return(
-            <div key={movie.id}>
-              <h1>{movie.title}</h1>
-              <h2>{movie.rating}</h2>
-              <img src={movie.medium_cover_image} alt="movie-poster"/>
-            </div>
-          )
+          return <Movie
+            key={movie.id}
+            id={movie.id}
+            
+            year={movie.year}
+            title={movie.title}
+            summary={movie.summary}
+            poster = {movie.medium_cover_image}
+                      />    
+          // return(
+          //   <div key={movie.id}>
+          //     <h1>{movie.title}</h1>
+          //     <h2>{movie.rating}</h2>
+          //     <img src={movie.medium_cover_image} alt="movie-poster"/>
+          //   </div>
+          // )
         })}
       </div>
     ) 
