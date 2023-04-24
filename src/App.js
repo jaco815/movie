@@ -47,8 +47,7 @@ class App extends React.Component{
         { isLoading? 'Loading...': 'we ar ready'}
         <br/>
         {movies.length}
-        <br/>
-        
+        <br/>        
         {movies.map(movie => {
           return <Movie
             key={movie.id}
